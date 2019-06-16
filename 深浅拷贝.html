@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //浅拷贝:只会拷贝第一层属性和方法，后面的属性和方法依然是引用数据类型
+        var obj1 = {
+            name: "zs",
+            age: 18,
+            wife: ["桥本环奈", "斋藤飞鸟"],
+            hobby: {
+                game: ["Data", "lol"],
+                sing: ["wangfei", "love"]
+            },
+            saiHai: function () {
+                alert("hi")
+            }
+        }
+        var obj2 = {}
+        for (var key in obj1) {
+            obj2[key] = obj1[key]
+        }
+
+        //深拷贝:拷贝所有数据，所有的数据都是独立的
+        var obj3 = {}
+        function deepCopy(source, target) {
+            for (var key in source) {
+                if (source[key] instanceof Array) {
+                    target[key] = []
+                    deepCopy(source[key], target[key])
+                } else if (source[key] instanceof Object) {
+                    target[key] = {}
+                    deepCopy(source[key], target[key])
+                } else {
+                    target[key] = source[key]
+                }
+            }
+
+        }
+        deepCopy(obj1, obj3)
+        obj1.age = 21
+        obj1.wife.push("新垣结衣") //obj2改变了
+        obj1.hobby.game.push("wow") //obj2改变了
+        console.log(obj1);
+        console.log(obj2);
+        console.log(obj3);
+
+    </script>
+</body>
+
+</html>
